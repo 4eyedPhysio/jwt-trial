@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 
 
 // Database connection
-const mongodb_URL = 'mongodb+srv://iammichy47:XfrFZs38FkMF9Jvg@cluster0.fxk7ukr.mongodb.net/jwt_auth?retryWrites=true&w=majority&appName=Cluster0'
+const mongodb_URL = "refer to my mongodb"
 
 
 
