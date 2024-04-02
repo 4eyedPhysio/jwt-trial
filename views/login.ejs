@@ -1,0 +1,66 @@
+<%- include(`./partials/header`); -%>
+
+<form >
+    <h2>Log in</h2>
+    <label for="email">Email</label>
+    <input type="text" name="email" required>
+    <div class="email error"></div>
+    <label for="password">password</label>
+    <input type="password" name="password" required>
+    <div class="password error"></div>
+    <button>Log in</button>
+</form>
+
+<script>
+    const form = document.querySelector(`form`);
+    const emailError = document.querySelector(`.email.error`)
+const password = document.querySelector(`.password.error`)
+//we add event listener to the submit because it is the default function of button to submit and refresh
+    form.addEventListener(`submit`, async(e)=>{
+        //now we dont want the page to refresh so we will not lose all our data
+       
+        e.preventDefault();
+
+        //this line is to reset the error message that shows under the input in the frontend
+        emailError.textContent = "";
+                passwordError.textContent = "";
+
+        //next is to get the values passed into the input
+
+        const email = form.email.value; // since we want to grab the value of the email, not the email field
+
+        const password = form.password.value;
+
+        // remember from the frontend here, we convert the signup route to send a post method to the database and we cant just return the body as a json like that, so we stringify it..remember that is whole process is an asynchronous function
+
+        try {
+
+            //all the function is then stored in res
+            const res = await fetch(`/login`, {
+                method:`POST`,
+                body: JSON.stringify({ email,password}),
+                headers:{"Content-Type":"application/json"}
+            });
+            const data = await res.json();
+            console.log(data);
+            if(data.errors){
+                emailError.textContent = data.errors.email;
+                passwordError.textContent = data.errors.password;
+            }if(data.user){
+                location.assign(`/`)
+                //the code above redirect from the front end to take us back to the homepage
+            }
+
+        }catch (err) {
+            console.log(err);
+        }
+
+
+    })
+</script>
+
+
+
+
+<%- include (`./partials/footer`)-%>
+
